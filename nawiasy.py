@@ -1,48 +1,35 @@
-"""
-Zadanie 2 - Nawiasy
+import argparse
 
-Opis zadania:
-- Zweryfikuj, czy podany ciąg znaków zawiera poprawne nawiasy.
-- Każdemu otwartemu nawiasowi '(' powinien odpowiadać nawias zamykający ')'.
-- Jeśli nawiasy się zgadzają, funkcja ma zwrócić True, w przeciwnym wypadku False.
-- Rozpatrujemy wyłącznie nawiasy okrągłe.
 
-Przykładowe wejścia (True):
-    "( if ( zero ? x ) max (/ 1 x ))"
-    "I told ( that its not ( yet ) done ). (42)"
-Przykładowe wejścia (False):
-    ":-)"
-    "Czesc (o kurcze, chyba niechcacy zamkne ten nawias dwa razy))"
-    "())(("
+def weryfikuj_nawiasy(tekst):
+    licznik = 0
 
-Wymagania:
-- Implementacja funkcji `check_parentheses(s: str) -> bool`.
-- Użycie stosu do weryfikacji poprawności nawiasów.
-"""
+    for znak in tekst:
+        if znak == '(':
+            licznik += 1
+        elif znak == ')':
+            licznik -= 1
 
-def check_parentheses(s: str) -> bool:
-    """
-    Sprawdza, czy w ciągu znaków 's' nawiasy okrągłe są poprawnie sparowane.
+        if licznik < 0:
+            return False
 
-    Args:
-        s (str): Ciąg znaków do analizy.
+    if licznik == 0:
+        return True
+    else:
+        return False
 
-    Returns:
-        bool: True jeśli nawiasy są poprawne, False w przeciwnym wypadku.
-    """
-    ### TUTAJ PODAJ ROZWIĄZANIE ZADANIA
 
-    ### return False - powinno być zmienione i zwrócić prawdziwy wynik (zgodny z oczekiwaniami)
-    return False
-
-# Przykładowe wywołanie:
+# URUCHAMIANIE PROGRAMU
 if __name__ == "__main__":
-    examples = [
-        "( if ( zero ? x ) max (/ 1 x ))",
-        "I told ( that its not ( yet ) done ). (42)",
-        ":-)",
-        "Czesc (o kurcze, chyba niechcacy zamkne ten nawias dwa razy))",
-        "())(("
-    ]
-    for example in examples:
-        print(f"{example} -> {check_parentheses(example)}")
+
+    tekst_testowy = "I told (that its not (yet) done). (42)"
+
+    try:
+        parser = argparse.ArgumentParser(description="Weryfikacja nawiasów")
+        parser.add_argument("identifier", type=str, nargs='?', default=tekst_testowy)
+        args = parser.parse_args()
+        wynik = weryfikuj_nawiasy(args.identifier)
+        print(wynik)
+    except:
+        wynik = weryfikuj_nawiasy(tekst_testowy)
+        print(wynik)
